@@ -1,0 +1,28 @@
+{
+  "name": "chat_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".server.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "Asaf Aviv",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "lodash.capitalize": "^4.2.1",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "concurrently": "^4.0.1",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1"
+  }
+}

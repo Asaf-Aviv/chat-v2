@@ -1,0 +1,11 @@
+import PropTypes from 'prop-types';
+
+export const MessagePropType = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  nickname: PropTypes.string.isRequired,
+  roomName: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
+});
+
+export const stopLinterWarning = {};

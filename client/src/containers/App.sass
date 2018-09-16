@@ -1,0 +1,91 @@
+*
+  margin: 0
+  padding: 0
+
+body
+  color: #FFF
+  background: #444
+
+.layout
+  display: grid
+  grid-template: repeat(20, 5vh) / repeat(10, 1fr)
+
+.roomslist
+  grid-column: 10 / 11
+  grid-row: 3 / 19
+  background: #0c3c3c
+
+.roomtabs
+  grid-column: 2 / 10
+  grid-row: 1 / 3
+  display: flex
+  background: #2f2f50
+
+.roomtab
+  display: flex
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+  align-items: center
+  white-space: nowrap
+  overflow: hidden
+  &__text
+    flex: 1
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+  &__btn
+    flex: 0 0 auto
+    background-color: #ccc
+    padding: .5em
+
+.roomcontainer
+  display: none
+  grid-column: 2 / 10
+  grid-row: 3 / 21
+  background: #e9e
+  grid-template: repeat(10, 1fr) / repeat(10, 1fr)
+
+.roomcontainer--active
+  display: grid
+
+.open
+  grid-column: 10 / 11
+  grid-row: 19 / 21
+  background: #5a0808
+
+// .room
+//   margin: 20px
+
+.messageslist
+  background: #eee
+  flex: 1
+  height: 100
+  overflow-y: auto
+
+.roomtab--active
+  background: silver
+
+.chatbox
+  grid-column: 2 / 11
+  grid-row: 1 / 9
+  display: flex
+  align-items: flex-end
+
+.userslist
+  grid-column: 1 / 2
+  grid-row: 1 / 11
+  background: #940707
+
+.chatinput
+  background: #000
+  grid-column: 2 / 11
+  grid-row: 10 / 11
+
+// .tabs
+//   grid-column: 3 / 11
+//   grid-row: 1 / 2
+//   display: flex
+
+// .user
+//   background: #251c1c
