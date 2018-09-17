@@ -1,9 +1,14 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
+import { activateTab } from '../utils/utils';
 import socket from '../socket/socket';
 
-class RoomTab extends PureComponent {
+class RoomTab extends Component {
+  componentDidMount = () => {
+    setTimeout(() => activateTab(this.props.roomName), 80);
+  }
+
   leaveRoom = (e) => {
     e.stopPropagation();
     socket.emit('leaveRoom', this.props.roomName);
@@ -12,10 +17,10 @@ class RoomTab extends PureComponent {
   render() {
     const { roomName } = this.props;
     return (
-      <div className="roomtab" data-target={roomName}>
+      <div className="room__tab" data-room={roomName}>
         <span className="roomtab__text">{roomName}</span>
         <Button
-          classes="roomtab__btn leave"
+          classes="room__tab__btn"
           onClick={this.leaveRoom}
           text="Leave"
         />

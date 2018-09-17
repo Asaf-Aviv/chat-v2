@@ -1,20 +1,26 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import User from '../components/User';
 
-class UsersList extends PureComponent {
-  render() {
-    const { usersList } = this.props;
-    return (
-      <div className="userslist">
-        {usersList.map(user => <User key={user} user={user} />)}
+const UsersList = ({ usersList }) => (
+  <div className="users__list__container">
+    {Object.keys(usersList).map(roomName => (
+      <div className="users__list" data-room={roomName} key={roomName}>
+        {usersList[roomName].map(user => <User key={user} user={user} />)}
       </div>
-    );
-  }
-}
+    ))}
+  </div>
+);
 
 UsersList.propTypes = {
-  usersList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  usersList: PropTypes.shape({
+    [PropTypes.string]: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
 };
 
-export default UsersList;
+const mapStateToProps = state => ({
+  usersList: state.usersList,
+});
+
+export default connect(mapStateToProps)(UsersList);

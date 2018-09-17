@@ -1,30 +1,27 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import socket from '../socket/socket';
 
-class Room extends PureComponent {
-  handleClick = (e) => {
-    const roomName = e.target.innerHTML;
-    socket.emit('joinRoom', roomName);
+class Room extends Component {
+  handleClick = () => {
+    socket.emit('joinRoom', this.props.roomName);
   };
 
   render() {
-    const { room } = this.props;
     return (
-      <div className="room">
-        <button
-          type="button"
-          onClick={this.handleClick}
-        >
-          {room}
-        </button>
-      </div>
+      <button
+        className="rooms__list__btn"
+        type="button"
+        onClick={this.handleClick}
+      >
+        {this.props.roomName}
+      </button>
     );
   }
 }
 
 Room.propTypes = {
-  room: PropTypes.string.isRequired,
+  roomName: PropTypes.string.isRequired,
 };
 
 export default Room;

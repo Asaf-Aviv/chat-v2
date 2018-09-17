@@ -1,18 +1,13 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Room from '../components/Room';
 
-class RoomsList extends PureComponent {
-  render() {
-    const { roomsList } = this.props;
-    return (
-      <div className="roomslist">
-        {roomsList.map(room => <Room key={room} room={room} />)}
-      </div>
-    );
-  }
-}
+const RoomsList = ({ roomsList }) => (
+  <div className="rooms__list">
+    {roomsList.map(roomName => <Room key={roomName} roomName={roomName} />)}
+  </div>
+);
 
 RoomsList.propTypes = {
   roomsList: PropTypes.arrayOf(PropTypes.string).isRequired,

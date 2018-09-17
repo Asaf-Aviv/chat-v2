@@ -1,30 +1,25 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import RoomTab from '../components/RoomTab';
 import { activateTab } from '../utils/utils';
 
-class RoomTabs extends PureComponent {
+class RoomTabs extends Component {
   onTabClick = (e) => {
     let tab = e.target;
-    if (tab.parentNode.classList.contains('roomtab')) {
+    if (tab.parentNode.classList.contains('room__tab')) {
       tab = tab.parentNode;
     }
-    if (tab.classList.contains('roomtab')) {
-      activateTab(tab.getAttribute('data-target'));
+    if (tab.classList.contains('room__tab')) {
+      activateTab(tab.getAttribute('data-room'));
     }
   }
 
   render() {
     const { myRooms } = this.props;
     return (
-      <div className="roomtabs" onClick={this.onTabClick}>
-        {myRooms.map(roomName => (
-          <RoomTab
-            key={roomName}
-            roomName={roomName}
-          />
-        ))}
+      <div className="room__tabs" onClick={this.onTabClick}>
+        {myRooms.map(roomName => <RoomTab key={roomName} roomName={roomName} />)}
       </div>
     );
   }
@@ -38,7 +33,4 @@ const mapStateToProps = state => ({
   myRooms: state.myRooms,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(RoomTabs);
+export default connect(mapStateToProps)(RoomTabs);

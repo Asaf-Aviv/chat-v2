@@ -1,17 +1,19 @@
 import React from 'react';
 import RoomTabs from '../containers/RoomTabs';
-import RoomsContainer from '../containers/RoomsContainer';
+import ChatBox from '../containers/ChatBox';
 import RoomsList from '../containers/RoomsList';
-import PrivateMessages from '../containers/PrivateMessages';
-import OpenRoomModal from './OpenRoomModal';
+import OpenRoom from './OpenRoom';
+import ChatInput from './ChatInput';
+import UsersList from '../containers/UsersList';
 
 const ChatLayout = () => (
   <div className="layout">
     <RoomTabs />
-    <RoomsContainer />
+    <UsersList />
     <RoomsList />
-    <PrivateMessages />
-    <OpenRoomModal />
+    <ChatBox />
+    <ChatInput />
+    <OpenRoom />
   </div>
 );
 

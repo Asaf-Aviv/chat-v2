@@ -1,16 +1,11 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class User extends PureComponent {
-  render() {
-    const { user } = this.props;
-    return (
-      <div className="user">
-        <span>{user}</span>
-      </div>
-    );
-  }
-}
+const User = ({ user }) => (
+  <div className="users__list__item">
+    <span>{user}</span>
+  </div>
+);
 
 User.propTypes = {
   user: PropTypes.string.isRequired,

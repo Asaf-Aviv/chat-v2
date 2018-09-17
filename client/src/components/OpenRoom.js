@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import socket from '../socket/socket';
 
-class OpenRoomModal extends Component {
+class OpenRoom extends Component {
   state = {
     roomName: '',
     reason: '',
@@ -35,19 +35,25 @@ class OpenRoomModal extends Component {
   render() {
     const { reason, roomName } = this.state;
     return (
-      <form className="open" onSubmit={this.handleSubmit}>
+      <form className="open__room" onSubmit={this.handleSubmit}>
         <input
+          className="open__room__input"
           onChange={this.handleChange}
           value={roomName}
           type="text"
           placeholder="Room name"
           maxLength={16}
         />
-        <button type="submit">Open</button>
         { reason && <div><span>{reason}</span></div> }
+        <button
+          className="open__room__btn"
+          type="submit"
+        >
+          Open room
+        </button>
       </form>
     );
   }
 }
 
-export default OpenRoomModal;
+export default OpenRoom;

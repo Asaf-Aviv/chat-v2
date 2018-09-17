@@ -1,34 +1,50 @@
+$main-bg: #2E2E49
+$header-bg: #242438
+$dark-bg: #111229
+$light-bg: #414372
+$light-green: #20cdbd
+
 *
   margin: 0
   padding: 0
 
 body
   color: #FFF
-  background: #444
+  background: $main-bg
+  font-family: "Prompt"
+  letter-spacing: 1px
+
+button
+  cursor: pointer
+
+button, textarea, input
+  font-family: inherit
+  color: inherit
+  letter-spacing: 1px
+  border: none
+  &:focus
+    outline-color: #FFC696
 
 .layout
   display: grid
-  grid-template: repeat(20, 5vh) / repeat(10, 1fr)
+  grid-template: repeat(10, 10vh) / repeat(10, 1fr)
 
-.roomslist
-  grid-column: 10 / 11
-  grid-row: 3 / 19
-  background: #0c3c3c
-
-.roomtabs
+.room__tabs
   grid-column: 2 / 10
-  grid-row: 1 / 3
+  grid-row: 1 / 2
   display: flex
-  background: #2f2f50
+  background: $header-bg
 
-.roomtab
+.room__tab
   display: flex
-  overflow: hidden
-  white-space: nowrap
+  cursor: pointer
   text-overflow: ellipsis
   align-items: center
   white-space: nowrap
   overflow: hidden
+  background: $light-bg
+  &.active
+    background: $light-green
   &__text
     flex: 1
     white-space: nowrap
@@ -39,53 +55,71 @@ body
     background-color: #ccc
     padding: .5em
 
-.roomcontainer
+.users__list
   display: none
-  grid-column: 2 / 10
-  grid-row: 3 / 21
-  background: #e9e
-  grid-template: repeat(10, 1fr) / repeat(10, 1fr)
+  flex-direction: column
+  padding: 10px
+  &.active
+    display: flex
+  &__container
+    grid-column: 1 / 2
+    grid-row: 2 / 11
+    background: $main-bg
+  &__item
+    background: $light-bg
+    margin-bottom: 10px
+    padding: 5px 0
+    text-align: center
 
-.roomcontainer--active
-  display: grid
-
-.open
+.rooms__list
   grid-column: 10 / 11
-  grid-row: 19 / 21
-  background: #5a0808
+  grid-row: 2 / 10
+  background: $main-bg
+  display: flex
+  flex-direction: column
+  padding: 10px
+  &__btn
+    background: $light-bg
+    margin-bottom: 10px
+    padding: 5px 0
 
-// .room
-//   margin: 20px
+.open__room
+  grid-column: 10 / 11
+  grid-row: 10 / 11
+  background: $main-bg
+  display: flex
+  flex-direction: column
+  &__input
+    flex: 1
+    background: $dark-bg
+    padding-left: 10px
+  &__btn
+    flex: 1
+    background: $main-bg
 
-.messageslist
+.chat
+  &__box
+    grid-column: 2 / 10
+    grid-row: 2 / 10
+    display: flex
+    align-items: flex-end
+    background: $dark-bg
+  &__input
+    &__container
+      background: $header-bg
+      grid-column: 2 / 10
+      grid-row: 10 / 11
+      display: flex
+    &__textarea
+      flex: 2
+      resize: none
+      background: $header-bg
+      padding: 5px 0 0 10px
+    &__btn
+      flex: 1
+      background: #2f2f3c
+
+.messages__list
   background: #eee
   flex: 1
-  height: 100
   overflow-y: auto
-
-.roomtab--active
-  background: silver
-
-.chatbox
-  grid-column: 2 / 11
-  grid-row: 1 / 9
-  display: flex
-  align-items: flex-end
-
-.userslist
-  grid-column: 1 / 2
-  grid-row: 1 / 11
-  background: #940707
-
-.chatinput
-  background: #000
-  grid-column: 2 / 11
-  grid-row: 10 / 11
-
-// .tabs
-//   grid-column: 3 / 11
-//   grid-row: 1 / 2
-//   display: flex
-
-// .user
-//   background: #251c1c

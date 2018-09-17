@@ -8,21 +8,6 @@ class ChatInput extends Component {
     message: '',
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const { nickname, roomName } = this.props;
-    const message = this.state.message.trim();
-
-    socket.emit('newRoomMessage', {
-      type: 'user',
-      nickname,
-      roomName,
-      body: message,
-      timestamp: Date.now(),
-    });
-    this.setState({ message: '' });
-  }
-
   handleChange = (e) => {
     this.setState({
       message: e.target.value,
@@ -36,16 +21,42 @@ class ChatInput extends Component {
     }
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { nickname } = this.props;
+    const message = this.state.message.trim();
+    const roomName = e.target.getAttribute('data-room');
+
+    socket.emit('newRoomMessage', {
+      type: 'user',
+      nickname,
+      roomName,
+      body: message,
+      timestamp: Date.now(),
+    });
+    this.setState({ message: '' });
+  }
+
+
   render() {
     return (
-      <form className="chatinput" onSubmit={this.handleSubmit}>
+      <form
+        className="chat__input__container"
+        onSubmit={this.handleSubmit}
+      >
         <textarea
+          className="chat__input__textarea"
           onChange={this.handleChange}
           onKeyDown={this.onEnterPress}
           value={this.state.message}
           required
         />
-        <button type="submit">Chat</button>
+        <button
+          className="chat__input__btn"
+          type="submit"
+        >
+          Chat
+        </button>
       </form>
     );
   }
@@ -56,10 +67,7 @@ const mapStateToProps = state => ({
 });
 
 ChatInput.propTypes = {
-  roomName: PropTypes.string.isRequired,
   nickname: PropTypes.string.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-)(ChatInput);
+export default connect(mapStateToProps)(ChatInput);

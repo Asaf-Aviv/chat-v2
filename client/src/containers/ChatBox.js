@@ -1,21 +1,30 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MessagePropType } from '../PropTypes/propTypes';
 import MessagesList from '../components/MessagesList';
 
-class ChatBox extends PureComponent {
-  render() {
-    const { messages } = this.props;
-    return (
-      <div className="chatbox">
-        <MessagesList messages={messages} classes="messageslist" />
-      </div>
-    );
-  }
-}
+const ChatBox = ({ roomMessages }) => (
+  <div className="chat__box">
+    {Object.keys(roomMessages).map(roomName => (
+      <MessagesList
+        key={roomName}
+        classes="messages__list"
+        messages={roomMessages[roomName]}
+        target={roomName}
+      />
+    ))}
+  </div>
+);
 
 ChatBox.propTypes = {
-  messages: PropTypes.arrayOf(MessagePropType).isRequired,
+  roomMessages: PropTypes.shape({
+    [PropTypes.string]: PropTypes.arrayOf(MessagePropType),
+  }).isRequired,
 };
 
-export default ChatBox;
+const mapStateToProps = state => ({
+  roomMessages: state.roomMessages,
+});
+
+export default connect(mapStateToProps)(ChatBox);

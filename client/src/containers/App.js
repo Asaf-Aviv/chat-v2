@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ChatLayout from '../components/ChatLayout';
+import Layout from '../components/Layout';
 import NicknameInput from '../components/NicknameInput';
 
 import './App.sass';
 
-const App = ({ nickname }) => (nickname ? <ChatLayout /> : <NicknameInput />);
+const App = ({ nickname }) => (nickname ? <Layout /> : <NicknameInput />);
 
 const mapStateToProps = state => ({
   nickname: state.nickname,
@@ -20,7 +20,4 @@ App.defaultProps = {
   nickname: '',
 };
 
-export default connect(
-  mapStateToProps,
-  null,
-)(App);
+export default connect(mapStateToProps)(App);
