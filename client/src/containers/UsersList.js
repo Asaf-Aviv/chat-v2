@@ -7,7 +7,7 @@ const UsersList = ({ usersList }) => (
   <div className="users__list__container">
     {Object.keys(usersList).map(roomName => (
       <div className="users__list" data-room={roomName} key={roomName}>
-        {usersList[roomName].map(user => <User key={user} user={user} />)}
+        {usersList[roomName].map(nickname => <User key={nickname} nickname={nickname} />)}
       </div>
     ))}
   </div>

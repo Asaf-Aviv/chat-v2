@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import socket from '../socket/socket';
 
-class Room extends Component {
+class Room extends PureComponent {
   handleClick = () => {
     socket.emit('joinRoom', this.props.roomName);
   };

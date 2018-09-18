@@ -7,11 +7,12 @@ $light-green: #20cdbd
 *
   margin: 0
   padding: 0
+  box-sizing: border-box
 
 body
   color: #FFF
   background: $main-bg
-  font-family: "Prompt"
+  font-family: Prompt, sans-serif
   letter-spacing: 1px
 
 button
@@ -120,6 +121,10 @@ button, textarea, input
       background: #2f2f3c
 
 .messages__list
+  display: none
+  max-height: 100%
   background: #eee
   flex: 1
   overflow-y: auto
+  &.active
+    display: block

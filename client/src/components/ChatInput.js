@@ -17,7 +17,7 @@ class ChatInput extends Component {
   onEnterPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      this.handleSubmit(e);
+      document.querySelector('.chat__input__btn').click();
     }
   }
 
@@ -36,7 +36,6 @@ class ChatInput extends Component {
     });
     this.setState({ message: '' });
   }
-
 
   render() {
     return (

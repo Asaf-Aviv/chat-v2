@@ -48,6 +48,24 @@ export default (state = {
         ...state,
         myRooms: state.myRooms
           .filter(roomName => roomName !== action.payload),
+        roomMessages: Object.keys(state.roomMessages)
+          .reduce((newObj, roomName) => {
+            if (roomName !== action.payload) {
+              /* eslint-disable no-param-reassign */
+              newObj[roomName] = state.roomMessages[roomName];
+              /* eslint-enable no-param-reassign */
+            }
+            return newObj;
+          }, {}),
+        usersList: Object.keys(state.usersList)
+          .reduce((newObj, roomName) => {
+            if (roomName !== action.payload) {
+              /* eslint-disable no-param-reassign */
+              newObj[roomName] = state.usersList[roomName];
+              /* eslint-enable no-param-reassign */
+            }
+            return newObj;
+          }, {}),
       };
     case 'USER_JOIN_ROOM':
       return {
