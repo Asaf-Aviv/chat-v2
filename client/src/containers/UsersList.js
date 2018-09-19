@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import User from '../components/User';
+import { UserPropType } from '../PropTypes/propTypes';
 
 const UsersList = ({ usersList }) => (
   <div className="users__list__container">
     {Object.keys(usersList).map(roomName => (
       <div className="users__list" data-room={roomName} key={roomName}>
-        {usersList[roomName].map(nickname => <User key={nickname} nickname={nickname} />)}
+        {Object.values(usersList[roomName]).map(user => (
+          <User key={user.nickname} user={user} />
+        ))}
       </div>
     ))}
   </div>
@@ -15,7 +18,7 @@ const UsersList = ({ usersList }) => (
 
 UsersList.propTypes = {
   usersList: PropTypes.shape({
-    [PropTypes.string]: PropTypes.arrayOf(PropTypes.string),
+    [PropTypes.string]: PropTypes.objectOf({ UserPropType }),
   }).isRequired,
 };
 

@@ -8,6 +8,7 @@ module.exports = {
     'react/destructuring-assignment': 0,
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-underscore-dangle': 0,
+    'no-unused-expressions': ["error", { "allowShortCircuit": true }],
   },
   env: {
     browser: true,

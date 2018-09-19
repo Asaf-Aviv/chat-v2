@@ -1,3 +1,5 @@
+import socket from '../socket/socket';
+
 export const activateTab = (roomName) => {
   try {
     document.querySelectorAll('.room__tab, .users__list, .messages__list')
@@ -34,3 +36,5 @@ export const updateTabsOnLeave = (roomName) => {
   document.querySelector('.chat__input__container')
     .setAttribute('data-room', '');
 };
+
+export const changeStatus = () => socket.emit('userStatusChange');

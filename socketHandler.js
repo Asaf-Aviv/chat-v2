@@ -16,18 +16,26 @@ module.exports = {
       });
     }
 
+    function getSocketRooms(socket) {
+      return Object.keys(socket.rooms).slice(1);
+    }
+
     io.on('connection', (socket) => {
       socket.on('setNickname', (nickname, isTakenCb) => {
         const nicknameExists = Object.values(connectedUsers)
-          .find(nick => nick.toLowerCase() === nickname.toLowerCase());
+          .find(user => user.nickname.toLowerCase() === nickname.toLowerCase());
 
         if (nicknameExists) {
           isTakenCb(true);
           return;
         }
 
+        connectedUsers[socket.id] = {
+          nickname,
+          isAway: false,
+        };
+
         isTakenCb(false);
-        connectedUsers[socket.id] = nickname;
         socket.emit('initialConnection');
       });
 
@@ -37,7 +45,7 @@ module.exports = {
 
       socket.on('privateMessage', (message, receiverNickname) => {
         const receiverId = Object.keys(connectedUsers
-          .find(id => connectedUsers[id] === receiverNickname));
+          .find(id => connectedUsers[id].nickname === receiverNickname));
 
         io.to(receiverId).emit('newPrivateMessage', message);
       });
@@ -62,33 +70,41 @@ module.exports = {
         }
         socket
           .join(roomName)
-          .emit('joinRoom', roomName)
-          .emit('getUsersList', await getUsersList(roomName), roomName)
           .to(roomName)
           .emit(
             'userJoinRoom',
             connectedUsers[socket.id],
             roomName,
-          );
+          )
+          .emit('selfJoinRoom', roomName)
+          .emit('getUsersList', await getUsersList(roomName), roomName);
       });
 
       socket.on('leaveRoom', (roomName) => {
         socket
           .leave(roomName)
-          .emit('selfLeaveRoom', roomName)
           .to(roomName)
           .emit(
             'userLeftRoom',
             connectedUsers[socket.id],
             roomName,
-          );
+          )
+          .emit('selfLeaveRoom', roomName);
+      });
+
+      socket.on('userStatusChange', () => {
+        connectedUsers[socket.id].isAway = !connectedUsers[socket.id].isAway;
+        const socketRooms = getSocketRooms(socket);
+        io.in(socketRooms[0]).emit('userStatusChange', connectedUsers[socket.id], socketRooms);
       });
 
       socket.on('getRoomsList', () => socket.emit('getRoomsList', roomsList));
 
       socket.on('disconnecting', () => {
         if (connectedUsers[socket.id]) {
-          Object.keys(socket.rooms).slice(1).forEach((roomName) => {
+          const socketRooms = getSocketRooms(socket);
+
+          socketRooms.forEach((roomName) => {
             socket.to(roomName).emit(
               'userDisconnected',
               connectedUsers[socket.id],

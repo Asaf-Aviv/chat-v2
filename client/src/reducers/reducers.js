@@ -40,7 +40,7 @@ export default (state = {
         },
         usersList: {
           ...state.usersList,
-          [action.payload]: [],
+          [action.payload]: {},
         },
       };
     case 'SELF_LEAVE_ROOM':
@@ -72,10 +72,10 @@ export default (state = {
         ...state,
         usersList: {
           ...state.usersList,
-          [action.payload.roomName]: [
+          [action.payload.roomName]: {
             ...state.usersList[action.payload.roomName],
-            action.payload.nickname,
-          ],
+            [action.payload.user.nickname]: action.payload.user,
+          },
         },
       };
     case 'USER_LEFT_ROOM':
@@ -83,8 +83,16 @@ export default (state = {
         ...state,
         usersList: {
           ...state.usersList,
-          [action.payload.roomName]: state.usersList[action.payload.roomName]
-            .filter(nickname => nickname !== action.payload.nickname),
+          [action.payload.roomName]: Object
+            .values(state.usersList[action.payload.roomName])
+            .reduce((newObj, user) => {
+              if (user.nickname !== action.payload.user.nickname) {
+                /* eslint-disable no-param-reassign */
+                newObj[user.nickname] = user;
+                /* eslint-enable no-param-reassign */
+              }
+              return newObj;
+            }, {}),
         },
       };
     case 'USER_LEFT_MESSAGE':
@@ -141,6 +149,27 @@ export default (state = {
             action.payload,
           ],
         },
+      };
+    case 'USER_STATUS_CHANGE':
+      return {
+        ...state,
+        usersList:
+        Object
+          .keys(state.usersList).reduce((newObj, roomName) => {
+            if (action.payload.roomsList.includes(roomName)) {
+              /* eslint-disable no-param-reassign */
+              newObj[roomName] = {
+                ...state.usersList[roomName],
+                [action.payload.user.nickname]: {
+                  ...action.payload.user,
+                },
+              };
+              return newObj;
+            }
+            newObj[roomName] = { ...state.usersList[roomName] };
+            /* eslint-enable no-param-reassign */
+            return newObj;
+          }, {}),
       };
     default: {
       return state;
