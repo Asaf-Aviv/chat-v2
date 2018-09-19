@@ -10,11 +10,6 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  resolve: {
-    alias: {
-      assets: path.resolve('./src/assets'),
-    },
-  },
   module: {
     rules: [
       {
