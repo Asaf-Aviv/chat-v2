@@ -10,6 +10,11 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    alias: {
+      assets: path.resolve('./src/assets'),
+    },
+  },
   module: {
     rules: [
       {
@@ -17,15 +22,6 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
-      // {
-      //   test: /\.sass/,
-      //   use: [
-      //     'style-loader',
-      //     'css-loader',
-      //     'postcss-loader',
-      //     'sass-loader',
-      //   ],
-      // },
       {
         test: /\.(sass|css)$/,
         use: [
@@ -36,7 +32,11 @@ module.exports = {
         ],
       },
       {
-        test: /\.(gif|png|jpe?g|svg)/i,
+        test: /\.svg$/,
+        loader: 'react-svg-loader',
+      },
+      {
+        test: /\.(gif|png|jpe?g)/i,
         use: [
           'file-loader',
           {

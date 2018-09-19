@@ -5,11 +5,11 @@ import * as actions from '../actions';
 const socket = openSocket();
 
 socket.on('initialConnection', () => {
-  socket.emit('joinRoom', 'Lobby');
   socket.emit('getRoomsList');
+  socket.emit('joinRoom', 'Lobby');
 });
 
-socket.on('joinRoom', (roomName) => {
+socket.on('selfJoinRoom', (roomName) => {
   store.dispatch(actions.selfJoinRoom(roomName));
 });
 
@@ -25,14 +25,14 @@ socket.on('newPrivateMessage', (message) => {
   store.dispatch(actions.newPrivateMessage(message));
 });
 
-socket.on('userJoinRoom', (nickname, roomName) => {
-  store.dispatch(actions.userJoinMessage(nickname, roomName));
-  store.dispatch(actions.addToUsersList(nickname, roomName));
+socket.on('userJoinRoom', (user, roomName) => {
+  store.dispatch(actions.userJoinMessage(user.nickname, roomName));
+  store.dispatch(actions.addToUsersList(user, roomName));
 });
 
-socket.on('userLeftRoom', (nickname, roomName) => {
-  store.dispatch(actions.userLeftMessage(nickname, roomName));
-  store.dispatch(actions.removeFromUsersList(nickname, roomName));
+socket.on('userLeftRoom', (user, roomName) => {
+  store.dispatch(actions.userLeftMessage(user.nickname, roomName));
+  store.dispatch(actions.removeFromUsersList(user, roomName));
 });
 
 socket.on('newRoomOpened', (roomName) => {
@@ -47,9 +47,13 @@ socket.on('getRoomsList', (roomsList) => {
   store.dispatch(actions.setRoomsList(roomsList));
 });
 
-socket.on('userDisconnected', (nickname, roomName) => {
-  store.dispatch(actions.userDisconnected(nickname, roomName));
-  store.dispatch(actions.removeFromUsersList(nickname, roomName));
+socket.on('userStatusChange', (user, roomsList) => {
+  store.dispatch(actions.userStatusChange(user, roomsList));
+});
+
+socket.on('userDisconnected', (user, roomName) => {
+  store.dispatch(actions.userDisconnected(user.nickname, roomName));
+  store.dispatch(actions.removeFromUsersList(user, roomName));
 });
 
 export default socket;

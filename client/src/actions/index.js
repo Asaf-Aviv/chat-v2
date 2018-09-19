@@ -8,8 +8,13 @@ export const setNickname = nickname => ({
 export const setUsersList = (usersList, roomName) => ({
   type: types.SET_USERS_LIST,
   payload: {
-    usersList,
     roomName,
+    usersList: usersList.reduce((newObj, userObj) => {
+      /* eslint-disable no-param-reassign */
+      newObj[userObj.nickname] = userObj;
+      /* eslint-enable no-param-reassign */
+      return newObj;
+    }, {}),
   },
 });
 
@@ -23,10 +28,10 @@ export const newRoom = roomName => ({
   payload: roomName,
 });
 
-export const addToUsersList = (nickname, roomName) => ({
+export const addToUsersList = (user, roomName) => ({
   type: types.USER_JOIN_ROOM,
   payload: {
-    nickname,
+    user,
     roomName,
   },
 });
@@ -57,10 +62,10 @@ export const selfLeaveJoinRoom = roomName => ({
   payload: roomName,
 });
 
-export const removeFromUsersList = (nickname, roomName) => ({
+export const removeFromUsersList = (user, roomName) => ({
   type: types.USER_LEFT_ROOM,
   payload: {
-    nickname,
+    user,
     roomName,
   },
 });
@@ -84,6 +89,14 @@ export const userJoinMessage = (nickname, roomName) => ({
     roomName,
     body: ' has joined the room',
     timestamp: Date.now(),
+  },
+});
+
+export const userStatusChange = (user, roomsList) => ({
+  type: types.USER_STATUS_CHANGE,
+  payload: {
+    user,
+    roomsList,
   },
 });
 

@@ -67,10 +67,26 @@ button, textarea, input
     grid-row: 2 / 11
     background: $main-bg
   &__item
+    display: flex
+    align-items: center
+    flex-direction: row-reverse
+    justify-content: flex-end
     background: $light-bg
     margin-bottom: 10px
     padding: 5px 0
-    text-align: center
+    .user__nickname
+      line-height: 1.6
+    .user__status
+      display: inline-block
+      align-items: center
+      margin: 0 10px
+      &.user--online
+        fill: #4dec0b
+      &.user--away
+        fill: #deec0b
+
+.active-path
+  fill: red
 
 .rooms__list
   grid-column: 10 / 11
@@ -123,7 +139,7 @@ button, textarea, input
 .messages__list
   display: none
   max-height: 100%
-  background: #eee
+  background: #313a49
   flex: 1
   overflow-y: auto
   &.active
