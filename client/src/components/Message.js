@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import VideoPlayer from './VideoPlayer';
 import { MessagePropType } from '../PropTypes/propTypes';
 import { youTubeRegex, twitchRegex } from '../utils/regex';
 
@@ -24,15 +25,16 @@ class Message extends PureComponent {
 
   render() {
     const { message, nickname, color } = this.props;
-    const canBeEmbeded = this.extractLinkAndId(message.body);
-    /* eslint-disable no-nested-ternary */
+
     const classes = message.type === 'admin'
       ? 'message--admin' : message.nickname === nickname
         ? 'message--self' : 'message--user';
-    /* eslint-ename no-nested-ternary */
+
+    const canBeEmbeded = this.extractLinkAndId(message.body);
     const videoSrc = canBeEmbeded.platform === 'YouTube'
       ? 'https://www.youtube.com/embed/'
       : 'https://clips.twitch.tv/embed?clip=';
+
     return (
       <div className={`message ${classes}`}>
         <time className="message__time">{moment(message.timestamp).format('hh:mm:ss')}</time>
@@ -42,15 +44,9 @@ class Message extends PureComponent {
         <span className="message__body">{message.body.replace(canBeEmbeded.link, '')}</span>
         {canBeEmbeded
           && (
-            <iframe
-              className="message__iframe"
-              src={`${videoSrc}${canBeEmbeded.id}`}
+            <VideoPlayer
+              videoSrc={`${videoSrc}${canBeEmbeded.id}`}
               title={`${canBeEmbeded.platform} video`}
-              type="text/html"
-              frameBorder="0"
-              width="100%"
-              height="360"
-              allowFullScreen
             />
           )
         }

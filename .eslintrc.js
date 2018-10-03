@@ -10,6 +10,7 @@ module.exports = {
     'no-underscore-dangle': 0,
     'no-unused-expressions': ["error", { "allowShortCircuit": true }],
     'no-bitwise': 0,
+    'no-nested-ternary': 0,
   },
   env: {
     browser: true,
