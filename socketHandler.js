@@ -5,6 +5,30 @@ module.exports = {
     const connectedUsers = {};
     const roomsList = ['Lobby', 'Music', 'Shows'];
 
+    function createMessage(action, nickname, roomName) {
+      let phrase = `has ${action === 'leave' ? 'left' : 'joined'} the room`;
+      if (action === 'disconnect') {
+        phrase = 'has been disconnected';
+      }
+      return {
+        type: 'admin',
+        nickname: '',
+        roomName,
+        body: `${nickname} ${phrase}`,
+        timestamp: Date.now(),
+      };
+    }
+
+    function welcomeMessage(roomName) {
+      return {
+        type: 'admin',
+        nickname: '',
+        roomName,
+        body: `Now talking in ${roomName}`,
+        timestamp: Date.now(),
+      };
+    }
+
     function getUsersList(roomName) {
       return new Promise((resolve) => {
         io.in(roomName).clients((error, clients) => {
@@ -43,13 +67,6 @@ module.exports = {
         io.to(message.roomName).emit('newRoomMessage', message);
       });
 
-      socket.on('privateMessage', (message, receiverNickname) => {
-        const receiverId = Object.keys(connectedUsers
-          .find(id => connectedUsers[id].nickname === receiverNickname));
-
-        io.to(receiverId).emit('newPrivateMessage', message);
-      });
-
       socket.on('openRoom', (roomName, isAvailableCb) => {
         const capitalRoomname = roomName
           .split(' ').map(w => capitalize(w.trim())).join('');
@@ -65,6 +82,7 @@ module.exports = {
       });
 
       socket.on('joinRoom', async (roomName) => {
+        const user = connectedUsers[socket.id];
         if (Object.keys(socket.rooms).includes(roomName)) {
           return;
         }
@@ -72,44 +90,54 @@ module.exports = {
           .join(roomName)
           .to(roomName)
           .emit(
-            'userJoinRoom',
-            connectedUsers[socket.id],
-            roomName,
+            'newRoomMessage',
+            createMessage('join', user.nickname, roomName),
           )
+          .to(roomName)
+          .emit('userJoinRoom', user, roomName)
           .emit('selfJoinRoom', roomName)
+          .emit('newRoomMessage', welcomeMessage(roomName))
           .emit('getUsersList', await getUsersList(roomName), roomName);
       });
 
       socket.on('leaveRoom', (roomName) => {
+        const { nickname } = connectedUsers[socket.id];
         socket
           .leave(roomName)
           .to(roomName)
           .emit(
-            'userLeftRoom',
-            connectedUsers[socket.id],
-            roomName,
+            'newRoomMessage',
+            createMessage('leave', nickname, roomName),
           )
+          .to(roomName)
+          .emit('userLeftRoom', nickname, roomName)
           .emit('selfLeaveRoom', roomName);
       });
 
       socket.on('userStatusChange', () => {
         connectedUsers[socket.id].isAway = !connectedUsers[socket.id].isAway;
         const socketRooms = getSocketRooms(socket);
-        io.in(socketRooms[0]).emit('userStatusChange', connectedUsers[socket.id], socketRooms);
+        socketRooms.forEach((roomName) => {
+          io.in(roomName).emit('userStatusChange', connectedUsers[socket.id], roomName);
+        });
       });
 
       socket.on('getRoomsList', () => socket.emit('getRoomsList', roomsList));
 
       socket.on('disconnecting', () => {
-        if (connectedUsers[socket.id]) {
+        const user = connectedUsers[socket.id];
+        if (user) {
           const socketRooms = getSocketRooms(socket);
 
           socketRooms.forEach((roomName) => {
-            socket.to(roomName).emit(
-              'userDisconnected',
-              connectedUsers[socket.id],
-              roomName,
-            );
+            socket
+              .to(roomName)
+              .emit(
+                'newRoomMessage',
+                createMessage('disconnect', user.nickname, roomName),
+              )
+              .to(roomName)
+              .emit('userLeftRoom', user.nickname, roomName);
           });
           delete connectedUsers[socket.id];
         }

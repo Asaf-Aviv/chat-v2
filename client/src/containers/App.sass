@@ -1,8 +1,10 @@
 $main-bg: #2E2E49
 $header-bg: #242438
-$dark-bg: #111229
+$dark-bg: #0e0c13
 $light-bg: #414372
-$light-green: #20cdbd
+$green: #1e8b81
+$light-green: #26b0a4
+$dark-green: #16625b
 
 *
   margin: 0
@@ -14,47 +16,79 @@ body
   background: $main-bg
   font-family: Prompt, sans-serif
   letter-spacing: 1px
+  font-size: 18px
 
 button
   cursor: pointer
 
 button, textarea, input
   font-family: inherit
+  font-size: inherit
   color: inherit
   letter-spacing: 1px
   border: none
   &:focus
     outline-color: #FFC696
 
-.layout
-  display: grid
-  grid-template: repeat(10, 10vh) / repeat(10, 1fr)
-
-.room__tabs
-  grid-column: 2 / 10
-  grid-row: 1 / 2
+#root
+  min-height: 100vh
   display: flex
-  background: $header-bg
-
-.room__tab
-  display: flex
-  cursor: pointer
-  text-overflow: ellipsis
   align-items: center
-  white-space: nowrap
-  overflow: hidden
-  background: $light-bg
-  &.active
+  justify-content: center
+
+#nickname
+  height: 50px
+  background: $dark-bg
+  color: #fff
+  padding-left: 10px
+  font-size: 18px
+  & ~ button
+    height: 50px
     background: $light-green
-  &__text
-    flex: 1
+    padding: 0 20px
+    color: #FFF
+    font-size: 18px
+    transition: background 200ms
+    &:hover
+      background: $green
+    &:active
+      background: $dark-green
+
+.layout
+  flex: 1
+  display: grid
+  grid-template: repeat(10, 10vh) / 200px repeat(8, 1fr) 200px
+
+.room
+  &__tabs
+    grid-column: 2 / 10
+    grid-row: 1 / 2
+    display: flex
+    align-items: center
+    background: $header-bg
+  &__tab
+    max-height: 50px
+    display: flex
+    cursor: pointer
+    text-overflow: ellipsis
+    align-items: center
     white-space: nowrap
     overflow: hidden
-    text-overflow: ellipsis
-  &__btn
-    flex: 0 0 auto
-    background-color: #ccc
-    padding: .5em
+    background: $light-bg
+    &.active
+      background: $dark-bg
+    &__text
+      flex: 1
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      padding: 0 20px
+    &__icon
+      height: 100%
+      flex: 0 0 auto
+      padding: 0.2em
+      &:hover
+        background: red
 
 .users__list
   display: none
@@ -74,16 +108,18 @@ button, textarea, input
     background: $light-bg
     margin-bottom: 10px
     padding: 5px 0
-    .user__nickname
-      line-height: 1.6
-    .user__status
-      display: inline-block
-      align-items: center
-      margin: 0 10px
-      &.user--online
-        fill: #4dec0b
-      &.user--away
-        fill: #deec0b
+
+.user
+  &__nickname
+    line-height: 1.6
+  &__status
+    display: inline-block
+    align-items: center
+    margin: 0 10px
+    &.user--online
+      fill: #4dec0b
+    &.user--away
+      fill: #deec0b
 
 .active-path
   fill: red
@@ -99,6 +135,9 @@ button, textarea, input
     background: $light-bg
     margin-bottom: 10px
     padding: 5px 0
+    transition: background 200ms
+    &:hover
+      background: $dark-bg
 
 .open__room
   grid-column: 10 / 11
@@ -112,7 +151,13 @@ button, textarea, input
     padding-left: 10px
   &__btn
     flex: 1
-    background: $main-bg
+    background: $dark-green
+    transition: background 200ms
+    &:hover
+      background: $green
+    &:active
+      background: $dark-green
+
 
 .chat
   &__box
@@ -128,19 +173,44 @@ button, textarea, input
       grid-row: 10 / 11
       display: flex
     &__textarea
-      flex: 2
+      flex: 3
       resize: none
       background: $header-bg
       padding: 5px 0 0 10px
     &__btn
       flex: 1
-      background: #2f2f3c
+      background: $light-green
+      transition: background 200ms
+      font-size: 30px
+      letter-spacing: 2px
+      &:hover
+        background: $green
+      &:active
+        background: $dark-green
 
 .messages__list
   display: none
   max-height: 100%
-  background: #313a49
   flex: 1
   overflow-y: auto
+  flex-direction: column
   &.active
-    display: block
+    display: flex
+
+.message
+  display: inline-block
+  font-size: 20px
+  padding: 10px
+  &__time
+    font-size: 16px
+    display: inline-block
+    width: 75px
+    margin: 0 10px
+  &__nickname
+    margin-right: 10px
+  &__body
+  &--self
+  &--admin
+    font-style: italic
+    font-weight: 300
+  &--user

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button';
 import { activateTab, updateTabsOnLeave } from '../utils/utils';
+import CloseIcon from '../assets/close.svg';
 import socket from '../socket/socket';
 
 class RoomTab extends PureComponent {
@@ -21,11 +21,7 @@ class RoomTab extends PureComponent {
     return (
       <div className="room__tab" data-room={roomName}>
         <span className="room__tab__text">{roomName}</span>
-        <Button
-          classes="room__tab__btn"
-          onClick={this.leaveRoom}
-          text="Leave"
-        />
+        <CloseIcon className="room__tab__icon" onClick={this.leaveRoom} />
         <span className="room__tab__notifications" />
       </div>
     );

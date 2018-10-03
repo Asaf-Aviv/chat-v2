@@ -3,18 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Room from '../components/Room';
 
-const RoomsList = ({ roomsList }) => (
+const RoomsList = ({ globalRooms }) => (
   <div className="rooms__list">
-    {roomsList.map(roomName => <Room key={roomName} roomName={roomName} />)}
+    {globalRooms.map(roomName => <Room key={roomName} roomName={roomName} />)}
   </div>
 );
 
 RoomsList.propTypes = {
-  roomsList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  globalRooms: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = state => ({
-  roomsList: state.roomsList,
+  globalRooms: state.globalRooms,
 });
 
 export default connect(mapStateToProps)(RoomsList);

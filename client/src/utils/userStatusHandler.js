@@ -1,5 +1,5 @@
-import { changeStatus } from './utils';
 import debouce from 'lodash.debounce';
+import { changeStatus } from './utils';
 
 const fiveMinutes = 60000 * 60;
 
@@ -22,4 +22,4 @@ const resetTimer = () => {
 export default debouce(() => {
   resetTimer();
   startTimer();
-}, 5000);
+}, 1000);

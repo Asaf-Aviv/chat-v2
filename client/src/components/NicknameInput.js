@@ -32,6 +32,7 @@ class NicknameInput extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <input
+          id="nickname"
           onChange={this.handleChange}
           value={nickname}
           type="text"

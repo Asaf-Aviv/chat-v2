@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 export const UserPropType = PropTypes.shape({
   nickname: PropTypes.string.isRequired,
   isAway: PropTypes.bool.isRequired,
+  color: PropTypes.string.isRequired,
 });
 
 export const MessagePropType = PropTypes.shape({

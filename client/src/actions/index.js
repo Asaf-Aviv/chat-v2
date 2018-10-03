@@ -1,9 +1,36 @@
 import * as types from './types';
+import colors from '../utils/colors';
 
 export const setNickname = nickname => ({
   type: types.SET_NICKNAME,
   payload: nickname,
 });
+
+export const selfJoinRoom = roomName => ({
+  type: types.SELF_JOIN_ROOM,
+  payload: roomName,
+});
+
+export const selfLeaveRoom = roomName => ({
+  type: types.SELF_LEAVE_ROOM,
+  payload: roomName,
+});
+
+export const newRoom = roomName => ({
+  type: types.ADD_NEW_ROOM,
+  payload: roomName,
+});
+
+export const initRoomMessages = roomName => ({
+  type: types.INIT_ROOM_MESSAGES,
+  payload: roomName,
+});
+
+export const delRoomMessages = roomName => ({
+  type: types.DEL_ROOM_MESSAGES,
+  payload: roomName,
+});
+
 
 export const setUsersList = (usersList, roomName) => ({
   type: types.SET_USERS_LIST,
@@ -11,7 +38,10 @@ export const setUsersList = (usersList, roomName) => ({
     roomName,
     usersList: usersList.reduce((newObj, userObj) => {
       /* eslint-disable no-param-reassign */
-      newObj[userObj.nickname] = userObj;
+      newObj[userObj.nickname] = {
+        ...userObj,
+        color: colors.pickRandomColor(),
+      };
       /* eslint-enable no-param-reassign */
       return newObj;
     }, {}),
@@ -23,84 +53,39 @@ export const setRoomsList = roomsList => ({
   payload: roomsList,
 });
 
-export const newRoom = roomName => ({
-  type: types.NEW_ROOM,
-  payload: roomName,
-});
-
 export const addToUsersList = (user, roomName) => ({
-  type: types.USER_JOIN_ROOM,
+  type: types.ADD_TO_USERS_LIST,
   payload: {
-    user,
+    user: {
+      ...user,
+      color: colors.pickRandomColor(),
+    },
     roomName,
   },
 });
 
-export const newPrivateMessage = message => ({
-  type: types.NEW_PRIVATE_MESSAGE,
-  payload: message,
-});
-
-export const userDisconnected = (nickname, roomName) => ({
-  type: types.USER_DISCONNECTED,
+export const removeFromUsersList = (nickname, roomName) => ({
+  type: types.REMOVE_FROM_USERS_LIST,
   payload: {
-    type: 'admin',
     nickname,
     roomName,
-    body: ' has been disconnected',
-    timestamp: Date.now(),
   },
 });
 
-export const selfJoinRoom = roomName => ({
-  type: types.SELF_JOIN_ROOM,
+export const removeUsersList = roomName => ({
+  type: types.REMOVE_USERS_LIST,
   payload: roomName,
 });
 
-export const selfLeaveJoinRoom = roomName => ({
-  type: types.SELF_LEAVE_ROOM,
-  payload: roomName,
-});
-
-export const removeFromUsersList = (user, roomName) => ({
-  type: types.USER_LEFT_ROOM,
-  payload: {
-    user,
-    roomName,
-  },
-});
-
-export const userLeftMessage = (nickname, roomName) => ({
-  type: types.USER_LEFT_MESSAGE,
-  payload: {
-    type: 'admin',
-    nickname,
-    roomName,
-    body: ' has left the room',
-    timestamp: Date.now(),
-  },
-});
-
-export const userJoinMessage = (nickname, roomName) => ({
-  type: types.USER_JOIN_MESSAGE,
-  payload: {
-    type: 'admin',
-    nickname,
-    roomName,
-    body: ' has joined the room',
-    timestamp: Date.now(),
-  },
-});
-
-export const userStatusChange = (user, roomsList) => ({
+export const userStatusChange = (user, roomName) => ({
   type: types.USER_STATUS_CHANGE,
   payload: {
     user,
-    roomsList,
+    roomName,
   },
 });
 
 export const newRoomMessage = message => ({
-  type: types.NEW_ROOM_MESSAGE,
+  type: types.NEW_MESSAGE,
   payload: message,
 });

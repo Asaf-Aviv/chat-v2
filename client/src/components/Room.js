@@ -4,7 +4,10 @@ import socket from '../socket/socket';
 
 class Room extends PureComponent {
   handleClick = () => {
-    socket.emit('joinRoom', this.props.roomName);
+    const { roomName } = this.props;
+    const currentRooms = [...document.querySelectorAll('.room__tab')];
+    if (currentRooms.some(room => room.getAttribute('data-room') === roomName)) return;
+    socket.emit('joinRoom', roomName);
   };
 
   render() {

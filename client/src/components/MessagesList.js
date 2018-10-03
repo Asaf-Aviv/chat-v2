@@ -1,10 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { MessagePropType } from '../PropTypes/propTypes';
+import { MessagePropType, UserPropType } from '../PropTypes/propTypes';
 import Message from './Message';
 
 class MessagesList extends PureComponent {
-  componentDidUpdate() {
+  componentDidMount = () => {
+    // const messagesLists = document.querySelectorAll('.messages__list')
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.messages.length === this.props.messages.length) {
+      return;
+    }
+
     const roomTab = document.querySelector(`.room__tab[data-room=${this.props.target}]`);
     const msgContainer = document.querySelector('.messages__list');
 
@@ -19,23 +27,25 @@ class MessagesList extends PureComponent {
   }
 
   render() {
-    const { messages, classes, target } = this.props;
+    const { messages, target, users } = this.props;
     return (
-      <div className={classes} data-room={target}>
+      <div className="messages__list" data-room={target}>
         {messages.map(message => (
           <Message
             key={`${message.nickname}_${message.timestamp}`}
             message={message}
+            color={message.type !== 'admin' && users[message.nickname].color}
           />
         ))}
       </div>
     );
   }
 }
+
 MessagesList.propTypes = {
   messages: PropTypes.arrayOf(MessagePropType).isRequired,
-  classes: PropTypes.string.isRequired,
   target: PropTypes.string.isRequired,
+  users: PropTypes.shape({ [PropTypes.string]: PropTypes.arrayOf(UserPropType) }).isRequired,
 };
 
 export default MessagesList;
