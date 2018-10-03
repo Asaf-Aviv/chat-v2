@@ -198,17 +198,18 @@ button, textarea, input
     display: flex
 
 .message
-  display: inline-block
-  font-size: 20px
   padding: 10px
   &__time
-    font-size: 16px
     display: inline-block
     width: 75px
-    margin: 0 10px
+    margin: 0 15px
   &__nickname
     margin-right: 10px
   &__body
+  &__iframe
+    max-width: 640px
+    margin: 0 auto
+    display: block
   &--self
   &--admin
     font-style: italic
