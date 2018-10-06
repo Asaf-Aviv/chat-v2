@@ -1,21 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MessagePropType, UserPropType } from '../PropTypes/propTypes';
 import MessagesList from '../components/MessagesList';
+import createDropbox from '../utils/createDropbox';
 
-const ChatBox = ({ roomMessages, usersList }) => (
-  <div className="chat__box">
-    {Object.keys(roomMessages).map(roomName => (
-      <MessagesList
-        key={roomName}
-        messages={roomMessages[roomName]}
-        target={roomName}
-        users={usersList[roomName]}
-      />
-    ))}
-  </div>
-);
+class ChatBox extends Component {
+  componentDidMount = () => {
+    const chatBox = document.querySelector('.chat__box');
+    createDropbox(chatBox);
+  }
+
+  render() {
+    const { roomMessages, usersList } = this.props;
+    return (
+      <div className="chat__box">
+        {Object.keys(roomMessages).map(roomName => (
+          <MessagesList
+            key={roomName}
+            messages={roomMessages[roomName]}
+            target={roomName}
+            users={usersList[roomName]}
+          />
+        ))}
+      </div>
+    );
+  }
+}
 
 ChatBox.propTypes = {
   roomMessages: PropTypes.shape({

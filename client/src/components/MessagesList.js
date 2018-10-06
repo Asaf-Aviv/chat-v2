@@ -34,7 +34,7 @@ class MessagesList extends PureComponent {
           <Message
             key={`${message.nickname}_${message.timestamp}`}
             message={message}
-            color={message.type !== 'admin' && users[message.nickname].color}
+            color={message.type === 'admin' ? '#FFF' : users[message.nickname].color}
           />
         ))}
       </div>

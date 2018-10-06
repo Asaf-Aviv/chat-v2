@@ -12,4 +12,5 @@ export const MessagePropType = PropTypes.shape({
   roomName: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired,
+  file: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 });

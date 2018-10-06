@@ -1,6 +1,11 @@
 import * as types from './types';
 import colors from '../utils/colors';
 
+export const addFile = message => ({
+  type: types.ADD_FILE,
+  payload: message,
+});
+
 export const setNickname = nickname => ({
   type: types.SET_NICKNAME,
   payload: nickname,

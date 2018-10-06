@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import RoomTabs from '../containers/RoomTabs';
 import ChatBox from '../containers/ChatBox';
 import RoomsList from '../containers/RoomsList';
@@ -20,7 +21,7 @@ class ChatLayout extends Component {
 
   render() {
     return (
-      <div className="layout">
+      <div className="layout" data-nickname={this.props.nickname}>
         <RoomTabs />
         <UsersList />
         <RoomsList />
@@ -31,4 +32,8 @@ class ChatLayout extends Component {
     );
   }
 }
+
+ChatLayout.propTypes = {
+  nickname: PropTypes.string.isRequired,
+};
 export default ChatLayout;

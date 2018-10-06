@@ -1,5 +1,13 @@
 export default (state = {}, action) => {
   switch (action.type) {
+    case 'ADD_FILE':
+      return {
+        ...state,
+        [action.payload.roomName]: [
+          ...state[action.payload.roomName],
+          action.payload,
+        ],
+      };
     case 'NEW_MESSAGE':
       return {
         ...state,

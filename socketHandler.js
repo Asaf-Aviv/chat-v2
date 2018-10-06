@@ -86,32 +86,33 @@ module.exports = {
         if (Object.keys(socket.rooms).includes(roomName)) {
           return;
         }
+
         socket
           .join(roomName)
+          .emit('getUsersList', await getUsersList(roomName), roomName)
+          .emit('selfJoinRoom', roomName)
+          .to(roomName)
+          .emit('userJoinRoom', user, roomName)
           .to(roomName)
           .emit(
             'newRoomMessage',
             createMessage('join', user.nickname, roomName),
           )
-          .to(roomName)
-          .emit('userJoinRoom', user, roomName)
-          .emit('selfJoinRoom', roomName)
-          .emit('newRoomMessage', welcomeMessage(roomName))
-          .emit('getUsersList', await getUsersList(roomName), roomName);
+          .emit('newRoomMessage', welcomeMessage(roomName));
       });
 
       socket.on('leaveRoom', (roomName) => {
         const { nickname } = connectedUsers[socket.id];
         socket
           .leave(roomName)
+          .emit('selfLeaveRoom', roomName)
           .to(roomName)
           .emit(
             'newRoomMessage',
             createMessage('leave', nickname, roomName),
           )
           .to(roomName)
-          .emit('userLeftRoom', nickname, roomName)
-          .emit('selfLeaveRoom', roomName);
+          .emit('userLeftRoom', nickname, roomName);
       });
 
       socket.on('userStatusChange', () => {
@@ -143,5 +144,6 @@ module.exports = {
         }
       });
     });
+    return this;
   },
 };

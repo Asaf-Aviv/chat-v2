@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import VideoPlayer from './VideoPlayer';
+import UploadedFile from './UploadedFile';
 import { MessagePropType } from '../PropTypes/propTypes';
 import { youTubeRegex, twitchRegex } from '../utils/regex';
 
@@ -38,9 +39,7 @@ class Message extends PureComponent {
     return (
       <div className={`message ${classes}`}>
         <time className="message__time">{moment(message.timestamp).format('hh:mm:ss')}</time>
-        {message.nickname
-          && <span className="message__nickname" style={{ color }}>{`${message.nickname}:`}</span>
-        }
+        <span className="message__nickname" style={{ color }}>{message.nickname}</span>
         <span className="message__body">{message.body.replace(canBeEmbeded.link, '')}</span>
         {canBeEmbeded
           && (
@@ -48,6 +47,11 @@ class Message extends PureComponent {
               videoSrc={`${videoSrc}${canBeEmbeded.id}`}
               title={`${canBeEmbeded.platform} video`}
             />
+          )
+        }
+        {message.file
+          && (
+            <UploadedFile file={message.file} />
           )
         }
       </div>

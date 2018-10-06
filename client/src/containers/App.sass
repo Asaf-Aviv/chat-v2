@@ -158,14 +158,16 @@ button, textarea, input
     &:active
       background: $dark-green
 
-
 .chat
   &__box
+    position: relative
     grid-column: 2 / 10
     grid-row: 2 / 10
     display: flex
     align-items: flex-end
     background: $dark-bg
+    &--highlited
+      box-shadow: 0 0 5px 2px #b605ff
   &__input
     &__container
       background: $header-bg
@@ -207,7 +209,7 @@ button, textarea, input
     margin-right: 10px
   &__body
   &__iframe
-    max-width: 640px
+    max-width: 480px
     margin: 0 auto
     display: block
   &--self

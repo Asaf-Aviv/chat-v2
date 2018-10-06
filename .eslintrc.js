@@ -9,6 +9,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-underscore-dangle': 0,
     'no-unused-expressions': ["error", { "allowShortCircuit": true }],
+    'jsx-a11y/media-has-caption': 0,
     'no-bitwise': 0,
     'no-nested-ternary': 0,
   },

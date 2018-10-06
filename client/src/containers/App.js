@@ -6,7 +6,7 @@ import NicknameInput from '../components/NicknameInput';
 
 import './App.sass';
 
-const App = ({ nickname }) => (nickname ? <Layout /> : <NicknameInput />);
+const App = ({ nickname }) => (nickname ? <Layout nickname={nickname} /> : <NicknameInput />);
 
 const mapStateToProps = state => ({
   nickname: state.nickname,

@@ -14,10 +14,15 @@ socket.on('selfJoinRoom', (roomName) => {
   store.dispatch(actions.initRoomMessages(roomName));
 });
 
+socket.on('uploadedFile', (file, roomName) => {
+  console.log(file);
+  store.dispatch(actions.addFile(file, roomName));
+});
+
 socket.on('selfLeaveRoom', (roomName) => {
+  store.dispatch(actions.delRoomMessages(roomName));
   store.dispatch(actions.selfLeaveRoom(roomName));
   store.dispatch(actions.removeUsersList(roomName));
-  store.dispatch(actions.delRoomMessages(roomName));
 });
 
 socket.on('newRoomMessage', (message) => {
