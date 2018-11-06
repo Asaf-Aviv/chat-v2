@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  color: #FFF;
+  background: #2E2E49;
+  font-family: Prompt, sans-serif; }
+
+button {
+  cursor: pointer; }
+
+button, textarea, input {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  letter-spacing: 1px;
+  border: none; }
+  button:focus, textarea:focus, input:focus {
+    outline-color: #FFC696; }
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+#nickname {
+  height: 50px;
+  background: #0e0c13;
+  color: #fff;
+  padding-left: 10px;
+  font-size: 18px; }
+  #nickname ~ button {
+    height: 50px;
+    background: #26b0a4;
+    padding: 0 20px;
+    color: #FFF;
+    font-size: 18px;
+    transition: background 200ms; }
+    #nickname ~ button:hover {
+      background: #1e8b81; }
+    #nickname ~ button:active {
+      background: #16625b; }
+
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template: repeat(10, 10vh)/200px repeat(8, 1fr) 200px; }
+
+.room__tabs {
+  grid-column: 2 / 10;
+  grid-row: 1 / 2;
+  display: flex;
+  align-items: center;
+  background: #242438; }
+
+.room__tab {
+  max-height: 50px;
+  display: flex;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  background: #414372; }
+  .room__tab.active {
+    background: #0e0c13; }
+  .room__tab__text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 20px; }
+  .room__tab__icon {
+    height: 100%;
+    flex: 0 0 auto;
+    padding: 0.2em; }
+    .room__tab__icon:hover {
+      background: red; }
+
+.users__list {
+  display: none;
+  flex-direction: column;
+  padding: 10px; }
+  .users__list.active {
+    display: flex; }
+  .users__list__container {
+    grid-column: 1 / 2;
+    grid-row: 2 / 11;
+    background: #2E2E49; }
+  .users__list__item {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    background: #414372;
+    margin-bottom: 10px;
+    padding: 5px 0; }
+
+.user__nickname {
+  line-height: 1.6; }
+
+.user__status {
+  display: inline-block;
+  align-items: center;
+  margin: 0 10px; }
+  .user__status.user--online {
+    fill: #4dec0b; }
+  .user__status.user--away {
+    fill: #deec0b; }
+
+.active-path {
+  fill: red; }
+
+.rooms__list {
+  grid-column: 10 / 11;
+  grid-row: 2 / 10;
+  background: #2E2E49;
+  display: flex;
+  flex-direction: column;
+  padding: 10px; }
+  .rooms__list__btn {
+    background: #414372;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    transition: background 200ms; }
+    .rooms__list__btn:hover {
+      background: #0e0c13; }
+
+.open__room {
+  grid-column: 10 / 11;
+  grid-row: 10 / 11;
+  background: #2E2E49;
+  display: flex;
+  flex-direction: column;
+  z-index: 60; }
+  .open__room__input {
+    flex: 1;
+    background: #0e0c13;
+    padding-left: 10px; }
+  .open__room__btn {
+    flex: 1;
+    background: #16625b;
+    transition: background 200ms; }
+    .open__room__btn:hover {
+      background: #1e8b81; }
+    .open__room__btn:active {
+      background: #16625b; }
+
+.chat__box {
+  position: relative;
+  grid-column: 2 / 10;
+  grid-row: 2 / 10;
+  display: flex;
+  align-items: flex-end;
+  background: #0e0c13; }
+  .chat__box--highlited {
+    box-shadow: 0 0 5px 2px #b605ff; }
+
+.chat__input__container {
+  background: #242438;
+  grid-column: 2 / 10;
+  grid-row: 10 / 11;
+  display: flex; }
+
+.chat__input__textarea {
+  flex: 3;
+  resize: none;
+  background: #242438;
+  padding: 5px 0 0 10px; }
+
+.chat__input__btn {
+  flex: 1;
+  background: #26b0a4;
+  transition: background 200ms;
+  font-size: 30px;
+  letter-spacing: 2px; }
+  .chat__input__btn:hover {
+    background: #1e8b81; }
+  .chat__input__btn:active {
+    background: #16625b; }
+
+.messages__list {
+  display: none;
+  max-height: 100%;
+  flex: 1;
+  overflow-y: auto;
+  flex-direction: column;
+  background: #414372; }
+  .messages__list.active {
+    display: flex; }
+
+.message {
+  padding: 10px; }
+  .message__time {
+    display: inline-block;
+    width: 75px;
+    margin: 0 15px; }
+  .message__nickname {
+    display: inline-block;
+    width: 50px; }
+  .message__body {
+    margin-left: 10px; }
+  .message__iframe {
+    max-width: 480px;
+    margin: 0 auto;
+    display: block; }
+  .message--admin {
+    font-style: italic;
+    font-weight: 300; }
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template: repeat(10, 10vh)/120px repeat(8, 1fr) 120px; } }
+

@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const server = http.Server(app);
 const io = require('socket.io')(server);
+const path = require('path');
 
 const uploadHandler = require('./uploadHandler');
 
@@ -13,24 +14,11 @@ app.use('/file', express.static('uploads'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static(path.join(__dirname, 'client/dist')));
+
 require('./socketHandler').init(io);
 
-// app.get('/file/:fileName', (req, res, next) => {
-
-//   const options = {
-//     root: `${__dirname}/uploads/`,
-//     dotfiles: 'deny',
-//   };
-
-//   const { fileName } = req.params;
-//   res.sendFile(fileName, options, (err) => {
-//     if (err) {
-//       next(err);
-//     } else {
-//       console.log('Sent:', fileName);
-//     }
-//   });
-// });
+app.get('/*', (req, res) => res.sendFile(path.join(__dirname, 'client/dist', 'index.html')));
 
 app.post('/upload', uploadHandler, (req, res) => {
   const { roomName, nickname } = req.body;
