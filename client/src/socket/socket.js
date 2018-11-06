@@ -15,7 +15,6 @@ socket.on('selfJoinRoom', (roomName) => {
 });
 
 socket.on('uploadedFile', (file, roomName) => {
-  console.log(file);
   store.dispatch(actions.addFile(file, roomName));
 });
 

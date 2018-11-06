@@ -12,9 +12,9 @@ class Message extends PureComponent {
     const youtubeLinks = str.match(youTubeRegex);
     const twitchLinks = str.match(twitchRegex);
     const platform = youtubeLinks ? 'YouTube' : 'Twitch';
+    const links = youtubeLinks || twitchLinks;
 
-    if (youtubeLinks || twitchLinks) {
-      const links = youtubeLinks || twitchLinks;
+    if (links) {
       return {
         platform,
         link: links[0],

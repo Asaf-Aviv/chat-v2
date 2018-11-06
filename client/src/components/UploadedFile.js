@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 
 const UploadedFile = ({ file }) => (
   <audio
+    className="audio-player"
     controls
     src={file.path.replace('uploads', 'file')}
-  >
-    Your browser does not support the
-    {' '}
-    <code>audio</code>
-    {' '}
-    element.
-  </audio>
+  />
 );
 
 UploadedFile.propTypes = {

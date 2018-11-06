@@ -15,8 +15,6 @@ body
   color: #FFF
   background: $main-bg
   font-family: Prompt, sans-serif
-  letter-spacing: 1px
-  font-size: 18px
 
 button
   cursor: pointer
@@ -145,6 +143,7 @@ button, textarea, input
   background: $main-bg
   display: flex
   flex-direction: column
+  z-index: 60
   &__input
     flex: 1
     background: $dark-bg
@@ -196,6 +195,7 @@ button, textarea, input
   flex: 1
   overflow-y: auto
   flex-direction: column
+  background: $light-bg
   &.active
     display: flex
 
@@ -206,8 +206,10 @@ button, textarea, input
     width: 75px
     margin: 0 15px
   &__nickname
-    margin-right: 10px
+    display: inline-block
+    width: 50px
   &__body
+    margin-left: 10px
   &__iframe
     max-width: 480px
     margin: 0 auto
@@ -217,3 +219,7 @@ button, textarea, input
     font-style: italic
     font-weight: 300
   &--user
+
+@media (max-width: 900px)
+  .layout
+    grid-template: repeat(10, 10vh) / 120px repeat(8, 1fr) 120px
