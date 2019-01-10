@@ -1,7 +1,7 @@
 import debouce from 'lodash.debounce';
 import { changeStatus } from './utils';
 
-const fiveMinutes = 60000 * 60;
+const fiveMinutes = 60000 * 5;
 
 let timeoutTimer;
 let startTime;
